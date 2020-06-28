@@ -8,7 +8,7 @@ export const HouseSearchingBot = async () => {
     try {
         await Login(driver);
         await driver.sleep(1000);
-        await FindHouses(driver, {place: 'breda', maxPrice: 900});
+        await FindHouses(driver, {place: process.env.PLACE, maxPrice: Number(process.env.MAX_PRICE)});
     } finally {
         await driver.quit();
     }
