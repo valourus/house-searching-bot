@@ -1,12 +1,14 @@
-import { Builder, By, Key, until } from 'selenium-webdriver';
+import { Builder, WebDriver } from 'selenium-webdriver';
+import { Login } from "./huurwoningen/Login";
+import { FindHouses } from "./huurwoningen/FindHouses";
 
 export const HouseSearchingBot = async () => {
-    let driver = await new Builder().forBrowser('firefox').build();
+    let driver: WebDriver = await new Builder().forBrowser('firefox').build();
+    console.log('starting searching');
     try {
-        const lol ='';
-        await driver.get('http://www.google.com/ncr');
-        await driver.findElement(By.name('q')).sendKeys('webdriver', Key.RETURN);
-        await driver.wait(until.titleIs('webdriver - Google Search'), 1000);
+        await Login(driver);
+        await driver.sleep(1000);
+        await FindHouses(driver, {place: 'breda', maxPrice: 900});
     } finally {
         await driver.quit();
     }
