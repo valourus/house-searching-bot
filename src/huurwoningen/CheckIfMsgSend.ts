@@ -2,6 +2,7 @@ import { By, WebDriver, WebElement } from "selenium-webdriver";
 import { createHash } from 'crypto';
 import { ReadData, WriteData } from "../DataStorage";
 import { SendMessage } from "./SendMessage";
+import { SendMail } from "./SendMail";
 
 export const CheckIfMsgSend = async (element: WebElement, driver: WebDriver): Promise<boolean> => {
     const titleElement = await element.findElement(By.css('section > section > div > a'));
@@ -13,12 +14,12 @@ export const CheckIfMsgSend = async (element: WebElement, driver: WebDriver): Pr
 
     const data = await ReadData();
     if (Object.keys(data).indexOf(hash) !== -1) return false;
-
-    await WriteData({
-        [hash]: {title: titleText, description: descriptionText},
-        ...data
+    const house = {title: titleText, description: descriptionText};
+    await WriteData({[hash]: house, ...data
     });
     await SendMessage(titleElement, driver);
+    await SendMail(house).then(() => console.log("mail send!"));
+
     return true;
 }
 
