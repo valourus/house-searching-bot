@@ -16,7 +16,7 @@ export const FindHouses = async (driver: WebDriver, {maxPrice, place}: SearchPar
         const isMsgSend = await CheckIfMsgSend(element, driver);
         if (isMsgSend) break
     }
-    await driver.sleep(300000);
+    await driver.sleep(1000);
 };
 
 async function goToOverviewPage(driver: WebDriver, maxPrice: number, place: string): Promise<void> {
