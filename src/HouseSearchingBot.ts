@@ -1,10 +1,14 @@
 import { Builder, WebDriver } from 'selenium-webdriver';
 import { Login } from "./huurwoningen/Login";
 import { FindHouses } from "./huurwoningen/FindHouses";
+import * as firefox from "selenium-webdriver/firefox";
 
 export const HouseSearchingBot = async () => {
-    let driver: WebDriver = await new Builder().forBrowser('firefox').build();
-    console.log('starting searching');
+    const options = new firefox.Options({})
+        .headless()
+        .windowSize({ width:1920, height: 1080 });
+    let driver: WebDriver = await new Builder().setFirefoxOptions(options).forBrowser('firefox').build();
+    console.log('starting searching')
     try {
         await Login(driver);
         await driver.sleep(1000);
